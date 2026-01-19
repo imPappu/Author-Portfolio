@@ -1,0 +1,11 @@
+/**
+ * Admin Styles
+ */
+
+.author-portfolio-admin-notice {
+	background-color: #fafbfc;
+	border-left: 4px solid #3498db;
+	padding: 12px 16px;
+	margin: 5px 0;
+	border-radius: 3px;
+}

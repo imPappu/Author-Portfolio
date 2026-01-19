@@ -1,0 +1,17 @@
+/*
+Theme Name: Noir Editorial
+Theme URI: https://example.com/noir-editorial
+Author: Antigravity AI
+Author URI: https://example.com
+Description: Liquid & Modern Luxury Author Portfolio Theme. High-end editorial design for books and literary works.
+Version: 1.1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: noir-editorial
+Domain Path: /languages
+Tags: portfolio, author, books, luxury, minimalist, responsive-layout, featured-images, custom-menu, custom-logo, translation-ready
+Requires at least: 5.0
+Requires PHP: 7.4
+*/
+
+/* This file is intentionally minimal. All frontend styles are loaded via assets/css/main.css */

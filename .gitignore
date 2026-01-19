@@ -1,0 +1,21 @@
+# WordPress Theme .gitignore
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+dist/
+.env
+.parcel-cache
+.cache
+.sass-cache
+*.map
+package-lock.json
+yarn.lock
+composer.lock
+vendor/
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
+*.temp
