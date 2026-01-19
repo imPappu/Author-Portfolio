@@ -8,15 +8,15 @@
 get_header();
 ?>
 
-<div class="archive-page-wrapper" style="padding-top: 180px; padding-bottom: 100px;">
+<div class="archive-page-wrapper">
     <div class="container">
         
-        <header class="section-header text-center" style="margin-bottom: 80px;">
+        <header class="section-header text-center">
             <span class="pill-tag fade-in-ready">Selected Works</span>
-            <h1 class="hero-title fade-in-ready" style="font-size: clamp(3rem, 6vw, 5.5rem);">
+            <h1 class="hero-title fade-in-ready">
                 The <span class="italic text-crimson">Library</span>
             </h1>
-            <p class="fade-in-ready" style="max-width: 600px; margin: 20px auto 0; color: var(--text-muted);">
+            <p class="fade-in-ready">
                 A curated selection of novels, journals, and literary explorations.
             </p>
         </header>
@@ -25,8 +25,8 @@ get_header();
         <?php
         $genres = get_terms(['taxonomy' => 'genre', 'hide_empty' => true]);
         if (!empty($genres)): ?>
-        <div class="genre-nav fade-in-ready" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 60px; flex-wrap: wrap;">
-            <a href="<?php echo get_post_type_archive_link('book'); ?>" class="pill-tag" style="background:var(--black); color:white;">All Genres</a>
+        <div class="genre-nav fade-in-ready">
+            <a href="<?php echo get_post_type_archive_link('book'); ?>" class="pill-tag active-filter">All Genres</a>
             <?php foreach($genres as $genre): ?>
                 <a href="<?php echo get_term_link($genre); ?>" class="pill-tag"><?php echo $genre->name; ?></a>
             <?php endforeach; ?>
@@ -34,7 +34,7 @@ get_header();
         <?php endif; ?>
 
         <?php if ( have_posts() ) : ?>
-            <div class="books-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px;">
+            <div class="books-grid">
                 <?php while ( have_posts() ) : the_post(); 
                     $c_title = get_post_meta(get_the_ID(), 'n_book_custom_title', true);
                     $d_title = !empty($c_title) ? $c_title : get_the_title();
@@ -53,8 +53,8 @@ get_header();
                         <div class="post-card-content">
                             <h2 class="post-card-title"><a href="<?php the_permalink(); ?>"><?php echo esc_html($d_title); ?></a></h2>
                             <div class="post-card-meta"><?php echo get_the_term_list(get_the_ID(), 'genre', '', ', ', ''); ?></div>
-                            <div style="margin-top: auto; padding-top: 20px;">
-                                <a href="<?php the_permalink(); ?>" class="text-crimson italic" style="font-weight: 700;">EXPLORE WORK →</a>
+                            <div class="explore-link-container">
+                                <a href="<?php the_permalink(); ?>" class="text-crimson explore-link italic">EXPLORE WORK →</a>
                             </div>
                         </div>
                     </article>

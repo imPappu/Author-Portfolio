@@ -701,6 +701,120 @@ img {
     transform: translateY(-3px);
 }
 
+/* --- Production Utilities --- */
+.btn-primary {
+    background: var(--crimson);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.btn-secondary {
+    background: var(--paper);
+    color: var(--crimson);
+    border: none;
+    padding: 15px 40px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    display: inline-block;
+}
+
+.social-links-list {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.social-link-item {
+    opacity: 1;
+    border-bottom: 1px solid var(--crimson);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.newsletter-section {
+    padding: 100px 0;
+}
+
+.newsletter-box-liquid {
+    background: var(--crimson);
+    color: white;
+    padding: 80px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.newsletter-form-container {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    border-radius: 50px;
+}
+
+.newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 0 30px;
+    outline: none;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.archive-page-wrapper {
+    padding-top: 180px;
+    padding-bottom: 100px;
+}
+
+.section-header {
+    margin-bottom: 80px;
+}
+
+.section-header p {
+    max-width: 600px;
+    margin: 20px auto 0;
+    color: var(--text-muted);
+}
+
+.books-grid,
+.audiobooks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.genre-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.active-filter {
+    background: var(--black) !important;
+    color: white !important;
+}
+
+.explore-link {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
 /* --- Responsive Layouts --- */
 @media (max-width: 992px) {
     .book-layout {

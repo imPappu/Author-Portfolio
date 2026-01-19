@@ -60,19 +60,26 @@ function noir_editorial_get_hero_images() {
 }
 
 /**
- * Get platform buy links
+ * Get platform buy links from the new dynamic system
  */
 function noir_editorial_get_buy_links( $post_id = null ) {
     if ( ! $post_id ) $post_id = get_the_ID();
     
+    $saved_links = get_post_meta($post_id, 'n_purchase_links', true) ?: [];
     $links = array();
-    $amazon = get_post_meta( $post_id, 'book_amazon_url', true );
-    $apple = get_post_meta( $post_id, 'book_apple_url', true );
-    $audible = get_post_meta( $post_id, 'audio_audible_url', true );
 
-    if ( $amazon ) $links['amazon'] = array( 'label' => 'Amazon', 'url' => $amazon, 'icon' => '📚' );
-    if ( $apple ) $links['apple'] = array( 'label' => 'Apple Books', 'url' => $apple, 'icon' => '🍎' );
-    if ( $audible ) $links['audible'] = array( 'label' => 'Audible', 'url' => $audible, 'icon' => '🎧' );
+    foreach($saved_links as $link) {
+        if (empty($link['id']) || empty($link['url'])) continue;
+        
+        $platform_post = get_post($link['id']);
+        if ($platform_post && $platform_post->post_status === 'publish') {
+            $links[] = array(
+                'label' => $platform_post->post_title,
+                'url'   => $link['url'],
+                'icon'  => has_post_thumbnail($platform_post->ID) ? get_the_post_thumbnail_url($platform_post->ID, 'thumbnail') : ''
+            );
+        }
+    }
 
     return $links;
 }

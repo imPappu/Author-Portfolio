@@ -30,16 +30,16 @@
                 <span class="hero-label fade-in-ready">EDITORIAL AUTHOR</span>
                 <h1 class="hero-title fade-in-ready">
                     <?php 
-                    $title = get_theme_mod('author_portfolio_hero_title', 'Redefining Modern Fiction');
-                    // Split title to allow the "Modern" highlight logic or display as is
-                    echo wp_kses_post(str_replace('Modern', '<span class="italic text-crimson">Modern</span>', $title)); 
+                    $title = get_theme_mod('author_portfolio_hero_title', 'Redefining {Modern} Fiction');
+                    // Find text inside curly braces and wrap it with crimson span
+                    echo wp_kses_post(preg_replace('/\{(.*?)\}/', '<span class="italic text-crimson">$1</span>', $title)); 
                     ?>
                 </h1>
                 <p class="hero-desc fade-in-ready">
                     <?php echo esc_html(get_theme_mod('author_portfolio_hero_description', 'A.V. Noir blends the cinematic intensity of high-fashion editorial aesthetics with the psychological depth of contemporary literature.')); ?>
                 </p>
                 <div class="hero-actions fade-in-ready" style="margin-top: 40px;">
-                    <a href="#library" class="btn-request" style="background:var(--crimson); color:white; border:none; padding:15px 40px; border-radius:50px; font-weight:700; text-transform:uppercase; letter-spacing:1px; font-size:0.8rem;">Explore Bibliography</a>
+                    <a href="#library" class="btn-primary">Explore Bibliography</a>
                 </div>
             </div>
         </div>
@@ -146,11 +146,11 @@
                         </div>
                     </div>
 
-                    <div class="author-socials" style="margin-top: 40px; display: flex; gap: 20px;">
+                    <div class="social-links-list">
                         <?php 
                         $socials = noir_editorial_get_social_links();
                         foreach( $socials as $platform => $url ) : ?>
-                            <a href="<?php echo esc_url($url); ?>" class="nav-link" style="opacity:1; border-bottom:1px solid var(--crimson);"><?php echo strtoupper($platform); ?></a>
+                            <a href="<?php echo esc_url($url); ?>" class="social-link-item"><?php echo strtoupper($platform); ?></a>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -159,15 +159,15 @@
     </section>
 
     <!-- The Inner Circle (Liquid Newsletter) -->
-    <section id="contact" class="newsletter-wrapper" style="padding: 100px 0;">
+    <section id="contact" class="newsletter-section">
         <div class="container">
-            <div class="newsletter-box fade-in-ready" style="background:var(--crimson); color:white; padding:80px; border-radius:var(--radius-lg); text-align:center;">
+            <div class="newsletter-box-liquid fade-in-ready">
                 <h2 style="font-size:3rem; margin-bottom:20px;">The Inner Circle</h2>
                 <p style="margin-bottom:40px; max-width:600px; margin-left:auto; margin-right:auto;">Join a curated list of readers. Exclusive manuscripts, private first-editions, and monthly missives.</p>
                 
-                <form class="newsletter-form-liquid" style="display:flex; max-width:600px; margin:0 auto; background:rgba(255,255,255,0.1); padding:5px; border-radius:50px;">
-                    <input type="email" placeholder="YOUR DIGITAL ADDRESS" required style="flex:1; background:transparent; border:none; color:white; padding:0 30px; outline:none;">
-                    <button type="submit" class="btn-request" style="background:white; color:var(--crimson); border:none; padding:15px 40px; border-radius:50px; font-weight:700;">REQUEST ENTRY</button>
+                <form class="newsletter-form-container">
+                    <input type="email" placeholder="YOUR DIGITAL ADDRESS" required class="newsletter-input">
+                    <button type="submit" class="btn-secondary">REQUEST ENTRY</button>
                 </form>
             </div>
         </div>

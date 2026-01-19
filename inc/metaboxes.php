@@ -15,6 +15,17 @@ function noir_editorial_add_meta_boxes() {
 add_action('add_meta_boxes', 'noir_editorial_add_meta_boxes');
 
 /**
+ * Enqueue Admin Assets
+ */
+function noir_editorial_admin_assets($hook) {
+    if ($hook == 'post.php' || $hook == 'post-new.php') {
+        wp_enqueue_media();
+        wp_enqueue_script('noir-admin-js', get_template_directory_uri() . '/assets/js/admin.js', array('jquery'), NOIR_VERSION, true);
+    }
+}
+add_action('admin_enqueue_scripts', 'noir_editorial_admin_assets');
+
+/**
  * HTML Helper for input fields
  */
 function noir_field_row($label, $name, $value, $type = 'text', $desc = '') {
@@ -23,6 +34,11 @@ function noir_field_row($label, $name, $value, $type = 'text', $desc = '') {
         <label style="display:block; font-weight:bold; margin-bottom:5px;"><?php echo esc_html($label); ?></label>
         <?php if($type === 'textarea'): ?>
             <textarea name="<?php echo esc_attr($name); ?>" rows="5" style="width:100%;"><?php echo esc_textarea($value); ?></textarea>
+        <?php elseif($type === 'image'): ?>
+            <div style="display:flex; gap:10px;">
+                <input type="url" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>" style="flex:1; padding:8px;" placeholder="https://...">
+                <button type="button" class="button noir-upload-btn">Select Image</button>
+            </div>
         <?php else: ?>
             <input type="<?php echo esc_attr($type); ?>" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>" style="width:100%; padding:8px;">
         <?php endif; ?>
@@ -68,7 +84,7 @@ function noir_editorial_book_details_cb($post) {
 
     noir_field_row('Editorial Title', 'n_book_custom_title', $title, 'text', 'Overrides the default post title.');
     noir_field_row('Editorial Description', 'n_book_description', $desc, 'textarea');
-    noir_field_row('Custom Cover Image URL', 'n_book_cover_url', $cover, 'url', 'Direct link to an image override.');
+    noir_field_row('Custom Cover Image URL', 'n_book_cover_url', $cover, 'image', 'Direct link to an image override or select from library.');
 
     echo '<label style="display:block; font-weight:bold; margin-bottom:10px;">Purchase Platforms & Links</label>';
     for($i=0; $i<5; $i++) {
@@ -91,7 +107,7 @@ function noir_editorial_audiobook_details_cb($post) {
 
     noir_field_row('Editorial Title', 'n_audio_custom_title', $title, 'text');
     noir_field_row('Audio Description', 'n_audio_description', $desc, 'textarea');
-    noir_field_row('Custom Audio Cover URL', 'n_audio_cover_url', $cover, 'url');
+    noir_field_row('Custom Audio Cover URL', 'n_audio_cover_url', $cover, 'image');
 
     echo '<label style="display:block; font-weight:bold; margin-bottom:10px;">Listening Platforms & Links</label>';
     for($i=0; $i<5; $i++) {
