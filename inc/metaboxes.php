@@ -118,36 +118,57 @@ function noir_editorial_audiobook_details_cb($post) {
 }
 
 /**
- * Save Meta Data
+ * Save Meta Data with Strict Security & Data Integrity
  */
 function noir_editorial_save_editorial_meta($post_id) {
-    // Check if saving book or audiobook
+    // 1. Security Check: Block Autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+    // 2. Security Check: Verify Nonces
     $is_book = isset($_POST['noir_book_meta_nonce_field']) && wp_verify_nonce($_POST['noir_book_meta_nonce_field'], 'noir_book_meta_nonce');
     $is_audio = isset($_POST['noir_audio_meta_nonce_field']) && wp_verify_nonce($_POST['noir_audio_meta_nonce_field'], 'noir_audio_meta_nonce');
 
-    if ($is_book || $is_audio) {
-        $prefix = $is_book ? 'n_book_' : 'n_audio_';
-        $fields = [$prefix.'custom_title', $prefix.'description', $prefix.'cover_url'];
-        
-        foreach ($fields as $field) {
-            if (isset($_POST[$field])) {
-                update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
-            }
-        }
+    if (!$is_book && !$is_audio) return;
 
-        // Save dynamic links
-        if (isset($_POST['purchase_platforms'])) {
-            $links = [];
-            foreach ($_POST['purchase_platforms'] as $link) {
-                if (!empty($link['id']) && !empty($link['url'])) {
-                    $links[] = [
-                        'id' => intval($link['id']),
-                        'url' => esc_url_raw($link['url'])
-                    ];
-                }
-            }
-            update_post_meta($post_id, 'n_purchase_links', $links);
+    // 3. Security Check: User Permissions
+    if (!current_user_can('edit_post', $post_id)) return;
+
+    // 4. Data Integrity: Strict Sanitization
+    $prefix = $is_book ? 'n_book_' : 'n_audio_';
+    $text_fields = [$prefix.'custom_title'];
+    $url_fields = [$prefix.'cover_url'];
+    $textarea_fields = [$prefix.'description'];
+
+    foreach ($text_fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
         }
+    }
+
+    foreach ($url_fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, esc_url_raw($_POST[$field]));
+        }
+    }
+
+    foreach ($textarea_fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, wp_kses_post($_POST[$field]));
+        }
+    }
+
+    // 5. Complex Relationships: Dynamic Platforms
+    if (isset($_POST['purchase_platforms']) && is_array($_POST['purchase_platforms'])) {
+        $links = [];
+        foreach ($_POST['purchase_platforms'] as $link) {
+            if (!empty($link['id']) && !empty($link['url'])) {
+                $links[] = [
+                    'id' => intval($link['id']),
+                    'url' => esc_url_raw($link['url'])
+                ];
+            }
+        }
+        update_post_meta($post_id, 'n_purchase_links', $links);
     }
 }
 add_action('save_post', 'noir_editorial_save_editorial_meta');

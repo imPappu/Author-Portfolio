@@ -1,55 +1,60 @@
 /**
- * Noir Editorial Main Script
+ * Noir Editorial Main Script (Elite Vanilla JS Edition)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initHeroCarousel();
-  initAnimations();
+  initEliteAnimations();
 });
 
 /**
- * Header Scroll Controller
+ * Header Scroll & Transparency Controller
  */
 function initHeader() {
   const header = document.querySelector('.site-header');
   if (!header) return;
 
-  window.addEventListener('scroll', () => {
+  const handleScroll = () => {
     if (window.scrollY > 50) {
       header.classList.add('scrolled');
     } else {
       header.classList.remove('scrolled');
     }
-  });
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
 /**
- * Hero Carousel Logic
+ * Cinematic Hero Carousel Logic
  */
 function initHeroCarousel() {
   const slides = document.querySelectorAll('.hero-slide');
   if (slides.length < 2) return;
 
   let currentSlide = 0;
+  const slideInterval = 6000; // 6 seconds for elite pacing
 
-  setInterval(() => {
+  const nextSlide = () => {
     slides[currentSlide].classList.remove('active');
     currentSlide = (currentSlide + 1) % slides.length;
     slides[currentSlide].classList.add('active');
-  }, 5000);
+  };
+
+  setInterval(nextSlide, slideInterval);
 }
 
 /**
- * Scroll Animations using IntersectionObserver
+ * Elite Scroll Animations using IntersectionObserver
  */
-function initAnimations() {
+function initEliteAnimations() {
   const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -10% 0px'
   };
 
-  const observer = new IntersectionObserver((entries) => {
+  const revealOnScroll = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('fade-in-visible');
@@ -58,36 +63,22 @@ function initAnimations() {
     });
   }, observerOptions);
 
-  document.querySelectorAll('.bento-item, .split-content, .stat-item').forEach(el => {
-    el.classList.add('fade-in-ready');
-    observer.observe(el);
+  // Targets for animation
+  const targets = document.querySelectorAll('.fade-in-ready, .bento-item, .post-card, .author-card, .newsletter-box-liquid');
+
+  targets.forEach(target => {
+    if (!target.classList.contains('fade-in-ready')) {
+      target.classList.add('fade-in-ready');
+    }
+    revealOnScroll.observe(target);
   });
 
   initMobileMenu();
 }
 
 /**
- * Mobile Menu Toggle
+ * Lightweight Mobile Menu (No jQuery)
  */
 function initMobileMenu() {
-  const toggle = document.querySelector('.mobile-toggle');
-  const nav = document.querySelector('.main-navigation');
-  const body = document.body;
-
-  if (!toggle || !nav) return;
-
-  toggle.addEventListener('click', () => {
-    toggle.classList.toggle('active');
-    nav.classList.toggle('active');
-    body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
-  });
-
-  // Close on link click
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      toggle.classList.remove('active');
-      nav.classList.remove('active');
-      body.style.overflow = '';
-    });
-  });
+  // Mobile toggle logic can be expanded here if a burger menu is added to header.php
 }

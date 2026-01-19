@@ -11,16 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- SEO & Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "<?php echo esc_attr(get_theme_mod('author_portfolio_author_name', get_bloginfo('name'))); ?>",
-      "jobTitle": "Author",
-      "description": "<?php echo esc_attr(wp_strip_all_tags(get_theme_mod('author_portfolio_hero_description'))); ?>",
-      "url": "<?php echo esc_url(home_url('/')); ?>"
-    }
-    </script>
+    <?php noir_editorial_generate_schema(); ?>
     
     <?php wp_head(); ?>
 </head>

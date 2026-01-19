@@ -83,3 +83,46 @@ function noir_editorial_get_buy_links( $post_id = null ) {
 
     return $links;
 }
+/**
+ * Generate JSON-LD Schema for AI & Search Engines
+ */
+function noir_editorial_generate_schema() {
+    $schema = array();
+
+    if ( is_front_page() || is_author() ) {
+        $schema = array(
+            "@context" => "https://schema.org",
+            "@type" => "Person",
+            "name" => get_theme_mod('author_portfolio_author_name', get_bloginfo('name')),
+            "jobTitle" => "Author",
+            "url" => home_url('/'),
+            "description" => get_theme_mod('author_portfolio_hero_description'),
+        );
+        
+        $socials = noir_editorial_get_social_links();
+        if ( ! empty( $socials ) ) {
+            $schema['sameAs'] = array_values( $socials );
+        }
+    }
+
+    if ( is_singular('book') ) {
+        global $post;
+        $schema = array(
+            "@context" => "https://schema.org",
+            "@type" => "Book",
+            "name" => get_post_meta($post->ID, 'n_book_custom_title', true) ?: get_the_title(),
+            "author" => array(
+                "@type" => "Person",
+                "name" => get_theme_mod('author_portfolio_author_name', get_bloginfo('name'))
+            ),
+            "description" => get_post_meta($post->ID, 'n_book_description', true),
+            "image" => get_post_meta($post->ID, 'n_book_cover_url', true) ?: get_the_post_thumbnail_url($post->ID, 'large'),
+        );
+    }
+
+    if ( ! empty( $schema ) ) {
+        echo "\n" . '<script type="application/ld+json">' . "\n";
+        echo json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+        echo "\n" . '</script>' . "\n";
+    }
+}

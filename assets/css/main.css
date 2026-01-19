@@ -6,37 +6,42 @@ Version: 1.1.0
 */
 
 :root {
-    /* Color Palette */
-    --crimson: #a61919;
-    --black: #0a0a0a;
-    --paper: #ffffff;
-    --gray-bg: #f5f5f5;
-    --text-main: #1a1a1a;
-    --text-muted: #666666;
-    --smoke: rgba(0, 0, 0, 0.05);
+    /* Color Palette (HSL based for elite blending) */
+    --h: 0;
+    --s: 73%;
+    --l: 37%;
+    --crimson: hsl(var(--h), var(--s), var(--l));
+    --crimson-light: hsl(var(--h), var(--s), 45%);
+    --black: hsl(0, 0%, 4%);
+    --paper: hsl(0, 0%, 100%);
+    --gray-bg: hsl(0, 0%, 96%);
+    --text-main: hsl(0, 0%, 10%);
+    --text-muted: hsl(0, 0%, 40%);
+    --smoke: hsla(0, 0%, 0%, 0.05);
+    --glass: hsla(0, 0%, 100%, 0.7);
 
-    /* Typography */
+    /* Typography (Elite Fluid Scaling) */
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
+    --font-size-hero: clamp(3.5rem, 10vw, 9rem);
+    --font-size-h1: clamp(2.5rem, 5vw, 4.5rem);
+    --font-size-h2: clamp(2rem, 4vw, 3rem);
 
-    /* liquid Radius System */
+    /* Liquid Radius System */
     --radius-pill: 100px;
-    --radius-lg: 40px;
-    --radius-md: 24px;
-    --radius-sm: 12px;
+    --radius-lg: 32px;
+    --radius-md: 20px;
+    --radius-sm: 10px;
 
-    /* Layout */
+    /* Layout & Spacing */
     --container-width: 1440px;
-    --section-padding: clamp(80px, 10vh, 160px);
-    --space-xl: 60px;
-    --space-lg: 40px;
-    --space-md: 24px;
-    --space-sm: 16px;
+    --section-padding: clamp(60px, 12vh, 180px);
+    --gutter: clamp(1rem, 5vw, 3rem);
 
-    /* Animation */
-    --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
-    --shadow-heavy: 0 30px 100px rgba(0, 0, 0, 0.1);
+    /* Animation & Effects */
+    --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    --shadow-soft: 0 10px 40px hsla(0, 0%, 0%, 0.03);
+    --shadow-heavy: 0 40px 80px hsla(0, 0%, 0%, 0.08);
 }
 
 /* --- Reset & Base --- */
@@ -128,22 +133,25 @@ img {
 }
 
 .site-header {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
+    background: var(--glass);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     border-radius: var(--radius-pill);
-    padding: 10px 10px 10px 40px;
+    padding: 12px 12px 12px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     max-width: var(--container-width);
     margin: 0 auto;
     box-shadow: var(--shadow-soft);
+    border: 1px solid hsla(0, 0%, 100%, 0.2);
     transition: var(--transition);
 }
 
 .site-header.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 8px 10px 8px 30px;
+    background: hsla(0, 0%, 100%, 0.95);
+    padding: 8px 12px 8px 30px;
+    box-shadow: var(--shadow-heavy);
 }
 
 .logo {
@@ -481,9 +489,10 @@ img {
 }
 
 .hero-title {
-    font-size: clamp(4rem, 12vw, 10rem);
-    line-height: 0.9;
-    letter-spacing: -3px;
+    font-size: var(--font-size-hero);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    font-weight: 900;
     margin-bottom: 3rem;
     color: white;
 }
