@@ -38,7 +38,7 @@
                 <p class="hero-desc fade-in-ready">
                     <?php echo esc_html(get_theme_mod('author_portfolio_hero_description', 'A.V. Noir blends the cinematic intensity of high-fashion editorial aesthetics with the psychological depth of contemporary literature.')); ?>
                 </p>
-                <div class="hero-actions fade-in-ready" style="margin-top: 40px;">
+                <div class="hero-actions fade-in-ready">
                     <a href="#library" class="btn-primary">Explore Bibliography</a>
                 </div>
             </div>
@@ -57,7 +57,7 @@
     <!-- Selected Bibliography (Liquid Bento Grid) -->
     <section id="library" class="bibliography-section">
         <div class="container">
-            <div class="bibliography-header" style="padding: 100px 0 60px;">
+            <div class="bibliography-header">
                 <h2 class="bib-title fade-in-ready">
                     SELECTED <br>
                     <span class="italic text-crimson">Bibliography</span>
@@ -162,8 +162,8 @@
     <section id="contact" class="newsletter-section">
         <div class="container">
             <div class="newsletter-box-liquid fade-in-ready">
-                <h2 style="font-size:3rem; margin-bottom:20px;">The Inner Circle</h2>
-                <p style="margin-bottom:40px; max-width:600px; margin-left:auto; margin-right:auto;">Join a curated list of readers. Exclusive manuscripts, private first-editions, and monthly missives.</p>
+                <h2>The Inner Circle</h2>
+                <p>Join a curated list of readers. Exclusive manuscripts, private first-editions, and monthly missives.</p>
                 
                 <form class="newsletter-form-container">
                     <input type="email" placeholder="YOUR DIGITAL ADDRESS" required class="newsletter-input">

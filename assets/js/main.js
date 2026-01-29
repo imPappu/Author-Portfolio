@@ -80,5 +80,27 @@ function initEliteAnimations() {
  * Lightweight Mobile Menu (No jQuery)
  */
 function initMobileMenu() {
-  // Mobile toggle logic can be expanded here if a burger menu is added to header.php
+  const toggle = document.querySelector('.mobile-toggle');
+  const overlay = document.querySelector('.mobile-nav-overlay');
+  const body = document.body;
+  const navLinks = document.querySelectorAll('.mobile-nav-menu a');
+
+  if (!toggle || !overlay) return;
+
+  const toggleMenu = () => {
+    toggle.classList.toggle('active');
+    overlay.classList.toggle('active');
+    body.classList.toggle('nav-active');
+  };
+
+  toggle.addEventListener('click', toggleMenu);
+
+  // Close menu when a link is clicked
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      toggle.classList.remove('active');
+      overlay.classList.remove('active');
+      body.classList.remove('nav-active');
+    });
+  });
 }
