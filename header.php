@@ -18,6 +18,8 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<div class="custom-cursor"></div>
+
 <div class="header-wrapper">
     <header class="site-header">
         <div class="logo">
@@ -39,19 +41,38 @@
             wp_nav_menu([
                 'theme_location' => 'primary',
                 'container' => false,
-                'menu_class' => 'nav-menu',
+                'menu_class' => 'nav-menu stagger-container',
                 'fallback_cb' => false,
-                'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s<li><a href="#contact" class="btn-contact">Contact</a></li></ul>',
+                'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s<li class="stagger-item"><a href="#contact" class="btn-contact">Contact</a></li></ul>',
                 'link_class' => 'nav-link'
             ]);
             ?>
         </nav>
 
-        <!-- Mobile Toggle (simplified for this layout) -->
-        <div class="mobile-toggle-wrapper" style="display:none;">
-            <div class="mobile-toggle"><span></span></div>
+        <!-- Mobile Toggle -->
+        <div class="mobile-toggle-wrapper">
+            <button class="mobile-toggle" aria-label="Toggle Navigation">
+                <span class="line line-1"></span>
+                <span class="line line-2"></span>
+                <span class="line line-3"></span>
+            </button>
         </div>
     </header>
+</div>
+
+<!-- Mobile Navigation Overlay -->
+<div class="mobile-nav-overlay">
+    <div class="mobile-nav-content">
+        <?php
+        wp_nav_menu([
+            'theme_location' => 'primary',
+            'container' => false,
+            'menu_class' => 'mobile-nav-menu stagger-container',
+            'fallback_cb' => false,
+            'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s<li class="stagger-item"><a href="#contact" class="btn-contact mobile-nav-contact">Contact</a></li></ul>'
+        ]);
+        ?>
+    </div>
 </div>
 
 <div id="page" class="site">

@@ -27,23 +27,23 @@
             </div>
 
             <!-- Centered Navigation Links -->
-            <div class="footer-nav-centered fade-in-ready">
+            <div class="footer-nav-centered">
                 <?php
                 wp_nav_menu([
                     'theme_location' => 'primary',
                     'container' => false,
-                    'menu_class' => 'footer-menu-pill',
+                    'menu_class' => 'footer-menu-pill stagger-container',
                     'fallback_cb' => false
                 ]);
                 ?>
             </div>
 
             <!-- Centered Socials -->
-            <div class="footer-socials-centered fade-in-ready">
+            <div class="footer-socials-centered stagger-container">
                 <?php 
                 $socials = noir_editorial_get_social_links();
                 foreach( $socials as $platform => $url ) : ?>
-                    <a href="<?php echo esc_url($url); ?>" class="social-circle-link" target="_blank" aria-label="<?php echo esc_attr($platform); ?>">
+                    <a href="<?php echo esc_url($url); ?>" class="social-circle-link stagger-item" target="_blank" aria-label="<?php echo esc_attr($platform); ?>">
                         <span class="platform-name"><?php echo strtoupper($platform); ?></span>
                     </a>
                 <?php endforeach; ?>
